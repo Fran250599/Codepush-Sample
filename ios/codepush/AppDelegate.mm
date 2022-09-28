@@ -6,6 +6,7 @@
 #import <AppCenterReactNative.h>
 #import <AppCenterReactNativeAnalytics.h>
 #import <AppCenterReactNativeCrashes.h>
+#import <CodePush/CodePush.h>
 
 #import <React/RCTAppSetupUtils.h>
 
@@ -91,11 +92,11 @@ static NSString *const kRNConcurrentRoot = @"concurrentRoot";
 
 - (NSURL *)sourceURLForBridge:(RCTBridge *)bridge
 {
-#if DEBUG
-  return [[RCTBundleURLProvider sharedSettings] jsBundleURLForBundleRoot:@"index"];
-#else
-  return [[NSBundle mainBundle] URLForResource:@"main" withExtension:@"jsbundle"];
-#endif
+  #if DEBUG
+    return [[RCTBundleURLProvider sharedSettings] jsBundleURLForBundleRoot:@"index" fallbackResource:nil];
+  #else
+    return [CodePush bundleURL];
+  #endif
 }
 
 #if RCT_NEW_ARCH_ENABLED
